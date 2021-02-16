@@ -9,6 +9,9 @@ import darknet
 import time
 import cv2
 
+CONNECTION_URL = 'tcp://*:5558'
+
+
 print ("Load Start", time.asctime())
 CONFIDENCE_THRESHOLD = 0.2
 NMS_THRESHOLD = 0.4
@@ -45,7 +48,7 @@ class Server(threading.Thread):
     def run(self):
         context = zmq.Context()
         frontend = context.socket(zmq.ROUTER)
-        frontend.bind('tcp://*:62058')
+        frontend.bind(CONNECTION_URL)
 
         backend = context.socket(zmq.DEALER)
         backend.bind('inproc://backend_endpoint')
